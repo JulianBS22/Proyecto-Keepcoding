@@ -3,41 +3,7 @@ const peticionarioMovimientos = new XMLHttpRequest()
 const peticionarioUpdate = new XMLHttpRequest()
 let movimientos
 
-function dameMovimiento(id) {
-    id = parseInt(id)
-    for (let i=0; i < movimientos.length; i++) {
-        const movimiento = movimientos[i]
-        if (movimiento.id === id) {
-            return movimiento
-        }
-    }
-    return null
-}
 
-function clickMovimiento(ev) {
-    const movimiento_id = ev.target.parentNode.id;
-
-    const el_movimiento = dameMovimiento(movimiento_id)
-
-    if (el_movimiento) {
-        document.querySelector("#movimiento-activo").classList.remove('inactive')
-        document.querySelector("#date").value = el_movimiento.date
-        document.querySelector("#time").value = el_movimiento.time
-        document.querySelector("#moneda_from").value = el_movimiento.moneda_from
-        document.querySelector("#cantidad_from").value = el_movimiento.cantidad_from
-        document.querySelector("#moneda_to").value = el_movimiento.moneda_to
-        document.querySelector("#cantidad_to").value = el_movimiento.cantidad_to
-        document.querySelector("#id").value = el_movimiento.id
-        if (el_movimiento.es_ingreso) {
-            document.querySelector("#es_ingreso").checked = true
-        } else {
-            document.querySelector("#es_ingreso").checked = false
-        }
-    
-    }
-
-
-}
 
 function respuestaModificacion() {
     if (this.readyState === 4 && this.status === 200 ) {
@@ -51,8 +17,16 @@ function respuestaModificacion() {
         alert('Se ha producido un error en la petición')
     }
 }
+function clickButton (){
+    alert ('click')
+}
+const moneda_from = document.querySelector ("#moneda_from")
+const cantidad_from = document.querySelector ("#cantidad_from")
+const moneda_to = document.querySelector ("#moneda_to")
+const cantidad_to = document.querySelector ("#cantidad_to")
+
 const button=document.querySelector("#btn-alta")
-     button.addEventListener('click',clickMovimiento)
+     button.addEventListener('click',clickButton)
 function listaMovimientos() {
     const campos = ['date', 'time', 'moneda_from', 'cantidad_from', 'moneda_to','cantidad_to']
     

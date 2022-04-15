@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.css') }}">    
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <title>Balance | {% block titulo %}{% endblock %}</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+        <title>Balance </title>
     </head>
     <body>
         <div id="spinning" class="inactive">
@@ -17,13 +19,7 @@
                 Registro de ingresos gastos
             </div>
         </header>
-        <nav class="container">
-            <ul>
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/alta">Nuevo</a></li>
-            </ul>
-        </nav>
-        
+              
         <section id="lista-ppal" class="container">
             <h1>Listado de movimientos</h1>
             <table class="movimientos">
@@ -42,71 +38,52 @@
             </table>    
             <button id="btn-alta">Añadir movimiento</button>
         </section>
-        <section id="movimiento-activo" class="container inactive">
-            <h2>Modificar movimiento</h2>
-            <form id="form-movimiento">
-                <input type="text" id="id" hidden>
-                <label for="date">Date:
-                    <input type="date" name="date" id="date">
+       
+        <div class="container" class="grid">Elige una moneda:
+            <select id="moneda_from">
+                <option value="" disabled selected>Elige tu moneda</option>
+                <option>EUR</option>
+                <option>BTC</option>
+                <option>ETH</option>
+                <option>BCH</option>
+                <option>BNB</option>
+                <option>LINK</option>
+                <option>LUNA</option>
+                <option>ATOM</option>
+                <option>SOL</option>
+                <option>USDT</option>
+            </select>
+            Elige moneda destino:
+            <select id="moneda_to"> 
+                <option value="" disabled selected>Elige moneda destino</option>
+                <option>EUR</option>
+                <option>BTC</option>
+                <option>ETH</option>
+                <option>BCH</option>
+                <option>BNB</option>
+                <option>LINK</option>
+                <option>LUNA</option>
+                <option>ATOM</option>
+                <option>SOL</option>
+                <option>USDT</option>
+            </select>
+
+        <div>
+        <form>
+            <div class = "container" class="grid">
+                <label for ="CantidadInicial" id="cantidad_from">
+                    Cantidad Inicial
+                    <input type="number" step ="0.01" id="CantidadInicial" placeholder ="Su ingreso" required>
                 </label>
-                <label for="time">Time:
-                    <input type="time" name="time" id="time">
+
+                <label for ="CantidadFinal" id="cantidad_to">
+                    Cantidad Final
+                    <input type="number" step= "0.01" id="CantidadFinal" placeholder ="Su total" required>
                 </label>
-                <label for="moneda_from">Moneda_from:
-                    <input type="text" name="moneda_from" id="moneda_from">
-                </label>
-                <label for="es_ingreso">
-                    <input type="checkbox" name="es_ingreso" id="es_ingreso">Es ingreso
-                </label>
-                <label for="cantidad_from">Cantidad_from:
-                    <input type="number" name="cantidad" id="cantidad">
-                </label>
-                <label for="moneda_to">Moneda_to:
-                    <input type="text" name="moneda_to" id="moneda_to">
-                </label>
-                <label for="cantidad_to">Cantidad_to:
-                    <input type="text" name="cantidad_to" id="cantidad_to">
-                </label>
-                <div class="grid">
-                    <button id="aceptar">Aceptar</button>
-                    <button id="cancelar">Cancelar</button>
-                </div>
-            </form>
-        </section>
-        <div class="grid">
-            <details role="list" class="container">From:
-                <summary aria-haspopup="listbox">Elige una moneda</summary>
-                <ul role="listbox">
-                    <li><a>EUR</a></li>
-                    <li><a>BTC</a></li>
-                    <li><a>ETH</a></li>
-                    <li><a>BCH</a></li>
-                    <li><a>BNB</a></li>
-                    <li><a>LINK</a></li>
-                    <li><a>LUNA</a></li>
-                    <li><a>ATOM</a></li>
-                    <li><a>SOL</a></li>
-                    <li><a>USDT</a></li>
-                </ul>
-            </details>
-            
-            <details role="list" class="container">To:
-                <summary aria-haspopup="listbox">Elige moneda destino</summary>
-                <ul role="listbox">
-                    <li><a>EUR</a></li>
-                    <li><a>BTC</a></li>
-                    <li><a>ETH</a></li>
-                    <li><a>BCH</a></li>
-                    <li><a>BNB</a></li>
-                    <li><a>LINK</a></li>
-                    <li><a>LUNA</a></li>
-                    <li><a>ATOM</a></li>
-                    <li><a>SOL</a></li>
-                    <li><a>USDT</a></li>
-                </ul>
-            </details>
-            
-        </div>
+            </div>
+            <span href = "#" role="button" class ="material-icons"> calculate                
+            </span>
+        </form>
         <footer>
             <div class="container">
                 © 2022. Todos los derechos reservados
