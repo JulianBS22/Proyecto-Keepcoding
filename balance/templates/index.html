@@ -1,0 +1,118 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.css') }}">    
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <title>Balance | {% block titulo %}{% endblock %}</title>
+    </head>
+    <body>
+        <div id="spinning" class="inactive">
+
+        </div>
+    
+        <header>
+            <div class="container">
+                Registro de ingresos gastos
+            </div>
+        </header>
+        <nav class="container">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/alta">Nuevo</a></li>
+            </ul>
+        </nav>
+        
+        <section id="lista-ppal" class="container">
+            <h1>Listado de movimientos</h1>
+            <table class="movimientos">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Moneda_from</th>
+                        <th>Cantidad_from</th>
+                        <th>Moneda_to</th>
+                        <th>Cantidad_to</th>
+                    </tr>
+                </thead>
+                <tbody id="tbbody-movimientos" >
+                </tbody>
+            </table>    
+            <button id="btn-alta">Añadir movimiento</button>
+        </section>
+        <section id="movimiento-activo" class="container inactive">
+            <h2>Modificar movimiento</h2>
+            <form id="form-movimiento">
+                <input type="text" id="id" hidden>
+                <label for="date">Date:
+                    <input type="date" name="date" id="date">
+                </label>
+                <label for="time">Time:
+                    <input type="time" name="time" id="time">
+                </label>
+                <label for="moneda_from">Moneda_from:
+                    <input type="text" name="moneda_from" id="moneda_from">
+                </label>
+                <label for="es_ingreso">
+                    <input type="checkbox" name="es_ingreso" id="es_ingreso">Es ingreso
+                </label>
+                <label for="cantidad_from">Cantidad_from:
+                    <input type="number" name="cantidad" id="cantidad">
+                </label>
+                <label for="moneda_to">Moneda_to:
+                    <input type="text" name="moneda_to" id="moneda_to">
+                </label>
+                <label for="cantidad_to">Cantidad_to:
+                    <input type="text" name="cantidad_to" id="cantidad_to">
+                </label>
+                <div class="grid">
+                    <button id="aceptar">Aceptar</button>
+                    <button id="cancelar">Cancelar</button>
+                </div>
+            </form>
+        </section>
+        <div class="grid">
+            <details role="list" class="container">From:
+                <summary aria-haspopup="listbox">Elige una moneda</summary>
+                <ul role="listbox">
+                    <li><a>EUR</a></li>
+                    <li><a>BTC</a></li>
+                    <li><a>ETH</a></li>
+                    <li><a>BCH</a></li>
+                    <li><a>BNB</a></li>
+                    <li><a>LINK</a></li>
+                    <li><a>LUNA</a></li>
+                    <li><a>ATOM</a></li>
+                    <li><a>SOL</a></li>
+                    <li><a>USDT</a></li>
+                </ul>
+            </details>
+            
+            <details role="list" class="container">To:
+                <summary aria-haspopup="listbox">Elige moneda destino</summary>
+                <ul role="listbox">
+                    <li><a>EUR</a></li>
+                    <li><a>BTC</a></li>
+                    <li><a>ETH</a></li>
+                    <li><a>BCH</a></li>
+                    <li><a>BNB</a></li>
+                    <li><a>LINK</a></li>
+                    <li><a>LUNA</a></li>
+                    <li><a>ATOM</a></li>
+                    <li><a>SOL</a></li>
+                    <li><a>USDT</a></li>
+                </ul>
+            </details>
+            
+        </div>
+        <footer>
+            <div class="container">
+                © 2022. Todos los derechos reservados
+            </div>
+        </footer>
+
+        <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+    </body>
+</html>
