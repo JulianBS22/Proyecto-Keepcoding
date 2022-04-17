@@ -18,7 +18,8 @@ function respuestaModificacion() {
     }
 }
 function clickButton (){
-    alert ('click')
+    const nuevoFormulario = document.querySelector("#bloqueNuevoMov")
+    nuevoFormulario.style.display = 'block'
 }
 const moneda_from = document.querySelector ("#moneda_from")
 const cantidad_from = document.querySelector ("#cantidad_from")
@@ -27,48 +28,39 @@ const cantidad_to = document.querySelector ("#cantidad_to")
 
 const button=document.querySelector("#btn-alta")
      button.addEventListener('click',clickButton)
+
 function listaMovimientos() {
     const campos = ['date', 'time', 'moneda_from', 'cantidad_from', 'moneda_to','cantidad_to']
-    
+    console.log('entra')
     if (this.readyState === 4 && this.status === 200 ) {
         movimientos = JSON.parse(this.responseText)
-        
+        console.log(movimientos)
 
                 const tbody = document.querySelector("#tbbody-movimientos")
+                console.log(tbody)
                 tbody.innerHTML = ""
                 //oculta el formulario
 
                 for (let i = 0; i < movimientos.length; i++) {
                     const fila = document.createElement('tr')
-                    fila.addEventListener('click', clickMovimiento)
                     const movimiento = movimientos[i]
                     fila.id = movimiento.id
                     for (const campo of campos) {
                         const celda = document.createElement('td')
-                        /*
-                        celda.innerHTML = campo !== 'es_ingreso' ? movimiento[campo] :
-                                            movimiento[campo] === 1 ? 'Ingreso' : 'Gasto'
-                        */
-
-                        if (campo !== 'es_ingreso') {
-                            celda.innerHTML = movimiento[campo]
-                        } else if (movimiento[campo] === 1) {
-                            celda.innerHTML = 'Ingreso'
-                        } else {
-                            celda.innerHTML = 'Gasto'
-                        }
-
+                        celda.innerHTML = movimiento[campo]
                         fila.appendChild(celda)
                     }
-
+                    console.log(fila)
                     tbody.appendChild(fila)
                 }
                 
-
+/*llamar a una funcion similar a pidemovimientosHttp*/
 
     } else {
         alert("Se ha producido un error al cargar los movimientos")
     }
+
+
 
 }
 
@@ -79,9 +71,9 @@ function pideMovimientosHttp() {
     peticionarioMovimientos.send()
 }
 
-pideMovimientosHttp()
 
-document.querySelector("#aceptar").addEventListener('click', (ev) => {
+
+/*document.querySelector("#aceptar").addEventListener('click', (ev) => {
     ev.preventDefault()
     // Aquí deberíamos validar, por ejemplo. Fecha no después de hoy y fecha valida
 
@@ -107,3 +99,4 @@ document.querySelector("#aceptar").addEventListener('click', (ev) => {
 
 
 })
+*/
