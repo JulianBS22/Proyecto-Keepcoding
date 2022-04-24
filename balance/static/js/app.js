@@ -21,6 +21,7 @@ function pideMovimientosHttp(){
     
     peticionarioMovimientos.send()
 }
+
 function listaMovimientos() {
     const campos = ['date', 'time', 'moneda_from', 'cantidad_from', 'moneda_to','cantidad_to']
     if (this.readyState === 4 && this.status === 200 ) {
@@ -44,6 +45,7 @@ function listaMovimientos() {
                 
         // Una vez recuperados los movimientos y pintada la tabla de los mismos, llamamos al backend para recuperar el balance a día de hoy
         pideBalanceHttp()
+
     } else {
         alert("Se ha producido un error al cargar los movimientos")
     }
@@ -55,10 +57,7 @@ function pideBalanceHttp() {
     peticionarioMovimientos.onload = detalleBalance
     
     peticionarioMovimientos.send()
-    
 }
-
-
 
 function detalleBalance() {
     const campos = ['moneda','cantidad']

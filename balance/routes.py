@@ -6,6 +6,7 @@ from flask import render_template,jsonify,request
 import sqlite3
 import requests
 from balance.modelos import ProcesaDatos
+
 from obtenervalor import endpoint, headers,endpointCambioaEuros
 import datetime
 from datetime import date,datetime
@@ -60,6 +61,7 @@ def cambiodivisa(moneda_from, moneda_to, cantidad):
     respuestaJson = response.json()
     rate = respuestaJson['rate']
     cantidadFinal = round(float(rate) * float(cantidad),2)
+
     return jsonify ({
         "status": "success",
         "valor_cambio":round((cantidadFinal),2)
