@@ -1,4 +1,5 @@
 
+from select import select
 import sqlite3
 
 class ProcesaDatos:
@@ -46,6 +47,16 @@ class ProcesaDatos:
 
 
 
+    def haz_delete(self, consulta, params):
+            con = sqlite3.connect(self.origen_datos)
+            cur = con.cursor()
+
+            cur.execute(consulta, (params,))
+            con.commit()
+            con.close()
+         
+
+
     def recupera_datos(self):
         return self.haz_consulta("""
                         SELECT date, time, moneda_from, cantidad_from, moneda_to, cantidad_to
@@ -57,23 +68,60 @@ class ProcesaDatos:
 
     def consulta_id(self, id):
         return self.haz_consulta("""
-                        SELECT date, time, moneda_from, cantidad_from, moneda_to, cantidad_ id
+                        SELECT date, time, moneda_from, cantidad_from, moneda_to, cantidad_ to
                         FROM movimientos
                          WHERE id = ?      
                     """, (id,))
 
 
 
+    
     def modifica_datos(self, params):
         self.haz_consulta("""
                     INSERT INTO movimientos (date, time, moneda_from, cantidad_from, moneda_to, cantidad_to )
-                                    values (?, ?, ?, ?, ?)
+                                    values (?, ?, ?, ?, ?, ?)
                     """, params)
 
 
     def update_datos(self, params):
         self.haz_consulta("""
-                        UPDATE movimientos set date = ?, time = ?, moneda_from = ?, cantidad_from = ?, moneda_to = ?, cantidad_to
+                        UPDATE movimientos set date = ?, time = ?, moneda_from = ?, cantidad_from = ?, moneda_to= ?, cantidad_to
                         WHERE id = ?
                         """, params)
 
+    def recupera_monedas_wallet(self):
+        return self.haz_consulta("""
+                        SELECT moneda, cantidad
+                        FROM wallet
+                    """
+        )
+  
+    def recupera_cantidadInvertida(self):
+        return self.haz_consulta("""
+                        SELECT sum(cantidad_from) as inversion
+                        FROM movimientos
+                        WHERE moneda_from = 'EUR'
+                    """
+        )
+
+    def borraMoneda(self,params):
+        print(params)
+        self.haz_delete("""
+                DELETE 
+                FROM wallet
+                where moneda = ?
+            """,params
+        )
+
+    def actualizaMoneda (self, params):
+        self.haz_consulta("""
+                        UPDATE wallet set cantidad = ?
+                        WHERE moneda = ?
+                    """, params)
+
+    def insertarMoneda(self,params):
+        self.haz_consulta("""
+                    INSERT INTO wallet ( cantidad, moneda)
+                                    values (?, ?)
+                    """, params)
+                                      

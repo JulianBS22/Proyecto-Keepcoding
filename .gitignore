@@ -3,4 +3,3 @@
 config.py
 venv/
 .vscode/
-datos/movimientos.db

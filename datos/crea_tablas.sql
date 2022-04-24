@@ -8,3 +8,9 @@ CREATE TABLE "movimientos" (
     "cantidad_to"   REAL,
     PRIMARY KEY("id" AUTOINCREMENT)
 )
+
+CREATE TABLE "wallet" (
+    "moneda"   TEXT NOT NULL,
+    "cantidad" REAL,
+    PRIMARY KEY("moneda")
+)
