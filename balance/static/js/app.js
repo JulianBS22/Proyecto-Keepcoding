@@ -25,7 +25,7 @@ function pideMovimientosHttp(){
 function listaMovimientos() {
     const campos = ['date', 'time', 'moneda_from', 'cantidad_from', 'moneda_to','cantidad_to']
     if (this.readyState === 4 && this.status === 200 ) {
-        let movimientos = JSON.parse(this.responseText)
+        let movimientos = JSON.parse(this.responseText).datos
        
         const tbody = document.querySelector("#tbbody-movimientos")
         tbody.innerHTML = ""
@@ -63,9 +63,10 @@ function detalleBalance() {
     const campos = ['moneda','cantidad']
     
     if (this.readyState === 4 && this.status === 200 ) {
-        balanceHttp = JSON.parse(this.responseText)
+        balanceHttp = JSON.parse(this.responseText).datos
+        console.log(balanceHttp)
        // monedero =  JSON.parse(this.responseText)
-        const resultado= balanceHttp.valor_actual-balanceHttp.invertido
+        const resultado= balanceHttp.valor_actual - balanceHttp.invertido
         //const resultado= monedero.valor_actual-monedero.invertido
        
         const body = document.querySelector("#balance")
@@ -113,7 +114,6 @@ function detalleBalance() {
     } else {
         alert("Se ha producido un error al cargar el balance")
     }
-    
    
 }
 
@@ -122,6 +122,19 @@ function cambioDivisa() {
     const monedaFrom = formulario.elements["moneda_from"].value;
     const monedaTo = formulario.elements["moneda_to"].value
     const cantidadFrom = formulario.elements["cantidad_from"].value
+    if(monedaFrom==""){
+        alert('Selecione una moneda origen antes de calcular el cambio')
+        return
+    }
+    if(monedaTo==""){
+        alert('Selecione una moneda destino antes de calcular el cambio')
+        return
+    }
+    if(cantidadFrom==""){
+        alert('Para calcular el cambio debe introducir una cantidad inicial')
+        return
+    }
+
     peticionarioMovimientos.open("GET", "http://localhost:5000/api/v1/tipo_cambio/"+monedaFrom+"/"+monedaTo+"/"+cantidadFrom, true)
     peticionarioMovimientos.onload = pintarResultadoCambioDivisa
     
@@ -129,12 +142,15 @@ function cambioDivisa() {
 }
 function pintarResultadoCambioDivisa(){
     if (this.readyState === 4 && this.status === 200 ) {
-        let cambioHttp = JSON.parse(this.responseText)
+        let cambioHttp = JSON.parse(this.responseText).valor_cambio
         const totalConversion = document.querySelector("#cantidad_to")
         console.log(cambioHttp)
-        totalConversion.value=cambioHttp.valor_cambio
+        totalConversion.value=cambioHttp
         
+    }else {
+        alert ("No se ha podido cambiar la divisa")
     }
+        
 }
 function pideInyectarMovimientosHttp(){
 
@@ -143,6 +159,27 @@ function pideInyectarMovimientosHttp(){
         cantidad_from: document.querySelector("#cantidad_from").value,
         moneda_to: document.querySelector("#moneda_to").value,
         cantidad_to: document.querySelector("#cantidad_to").value,
+    }
+    console.log(movimiento.moneda_from)
+    if(movimiento.moneda_from==""){
+        alert('Selecciona la moneda origen para continuar')
+        return
+    }
+    if(movimiento.moneda_to==""){
+        alert('Selecciona la moneda destino para continuar')
+        return
+    }
+    if(movimiento.cantidad_from=="" || movimiento.cantidad_from <= 0){
+        alert('La cantidad inicial no es correcta')
+        return
+    }
+    if(movimiento.cantidad_to == "" || movimiento.cantidad_to == 0){
+        alert('El calculo aún no se ha realizado. Pulse el boton de Calcular')
+        return
+    }
+    if(movimiento.moneda_from == movimiento.moneda_to){
+        alert('No se puede realizar el cambio de la misma divisa')
+        return
     }
     for(let i= 0; i < monedasHttp.length;i++){
         const moneda=monedasHttp[i]
@@ -161,30 +198,48 @@ function pideInyectarMovimientosHttp(){
     pideInyectarMovimientos.onload = listaMovimientos
     
     pideInyectarMovimientos.send(JSON.stringify(movimiento))
-
+    addMonedaFrom(movimiento.moneda_to)
 }
 
-function confirmar(){
+function addMonedaFrom(codigoMoneda){
+
+    const moneda_fromSelect = document.querySelector("#moneda_from")
+        
+        
+    const fila = document.createElement('option')
+
+    fila.innerText = codigoMoneda
+    fila.setAttribute('value',codigoMoneda)
+    moneda_fromSelect.appendChild(fila)
+}
+function borraCantidadTo(){
+    console.log("entre")
+    document.querySelector("#cantidad_to").value = "0"
+
+}
+/*function confirmar(){
     if (this.readyState === 4 && this.status === 200 ) {
         let movimientosHttp = JSON.parse(this.responseText)
         const button=document.querySelector('button')
         console.log(button)
-       
+  
         console.log(movimientosHttp)
         inyectarMovimientos.value=movimientosHttp
     }
+    
 
-}
+}*/
 function obtenerCoinsDisponiblesHttp(){
     ocultacoins.open("GET","http://localhost:5000/api/v1/walletcoins", true)
     ocultacoins.onload = obtenerCoinsDisponibles
     ocultacoins.send()
+    
 }
 
 
 function obtenerCoinsDisponibles(){
     if (this.readyState === 4 && this.status === 200 ){
-        monedasHttp = JSON.parse(this.responseText)
+        monedasHttp = JSON.parse(this.responseText).wallet
         console.log(monedasHttp)
         const moneda_fromSelect = document.querySelector("#moneda_from")
         
@@ -197,6 +252,10 @@ function obtenerCoinsDisponibles(){
             moneda_fromSelect.appendChild(fila)
         }        
        
+    } else{
+        alert("Error al obtener el wallet")
     }
+
+    
    
 }

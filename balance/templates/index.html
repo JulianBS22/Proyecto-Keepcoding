@@ -56,14 +56,14 @@
                     <div class="container grid">
                         <label for="moneda_from">
                             <p>Elige una moneda:</p>
-                            <select id="moneda_from">
+                            <select id="moneda_from" onchange="borraCantidadTo()">
                                 <option value="" disabled selected>Elige tu moneda origen</option>
                                 <option value= 'EUR' >EUR</option>
                             </select>                
                         </label>                
                         <label for="moneda_to">
                             <p>Elige moneda destino:</p>
-                            <select id="moneda_to"> 
+                            <select id="moneda_to" onchange="borraCantidadTo()"> 
                                 <option value="" disabled selected>Elige tu moneda destino</option>
                                 <option value="EUR" >EUR</option>
                                 <option value="BTC" >BTC</option>
@@ -82,7 +82,7 @@
                     <div class="container grid">
                         <label for="cantidad_from">
                             <p>Cantidad Inicial:</p>
-                            <input type="number" step ="0.01" id="cantidad_from" placeholder ="Su ingreso" required>
+                            <input type="number" step ="0.01" id="cantidad_from" placeholder ="Su ingreso" required onblur="borraCantidadTo()">
                         </label>
 
                         <label for="cantidad_to">
@@ -98,14 +98,14 @@
                         <p><b>Confirmar</b></p>
                     <div class="row">
                         <div class="col">
-                            <span onclick="pideInyectarMovimientosHttp()" role="button" class ="material-icons" >calculate</span>
+                            <span onclick="pideInyectarMovimientosHttp()" role="button" class ="material-icons">check</span>
                         </div>
                     </div>
                 </form>
         </div>
         <footer>
             <div class="container">
-                © 2022. Todos los derechos reservados
+                © 2022. Julián Báez Suárez. Todos los derechos reservados
             </div>
         </footer>
         <script src="{{ url_for('static', filename='js/app.js')}}"></script>

@@ -103,6 +103,13 @@ class ProcesaDatos:
                         WHERE moneda_from = 'EUR'
                     """
         )
+    def recupera_cantidadRescatada(self):
+        return self.haz_consulta("""
+                        SELECT sum(cantidad_to) as rescatado
+                        FROM movimientos
+                        WHERE moneda_to = 'EUR'
+                    """
+        )
 
     def borraMoneda(self,params):
         print(params)

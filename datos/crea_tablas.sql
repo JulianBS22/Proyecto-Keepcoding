@@ -7,10 +7,10 @@ CREATE TABLE "movimientos" (
     "moneda_to" TEXT NOT NULL,
     "cantidad_to"   REAL,
     PRIMARY KEY("id" AUTOINCREMENT)
-)
+);
 
 CREATE TABLE "wallet" (
     "moneda"   TEXT NOT NULL,
     "cantidad" REAL,
     PRIMARY KEY("moneda")
-)
+);

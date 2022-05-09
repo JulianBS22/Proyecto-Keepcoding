@@ -1,2 +1,2 @@
 RUTA_BBDD="datos/movimientos.db"
-SECRET_KEY='aqui tu clave'
+SECRET_KEY='B036C6F1-E9BA-458F-88E7-1E6EADEF6011'
